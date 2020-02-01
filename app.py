@@ -1,6 +1,8 @@
 from flask import Flask, request, redirect, render_template, flash
 from modules import db, connect_db, Pet
 from forms import AddPetForm, EditPetForm
+from supersecrets import SECRET_KEY, API_KEY, TOKEN
+import requests
 
 app = Flask(__name__)
 
@@ -16,6 +18,8 @@ db.create_all()
 @app.route('/')
 def root():
     pets = Pet.query.all()
+    resp = requests.get('https://api.petfinder.com/v2/animals', headers={"Authorization": f"Bearer {TOKEN}"})
+    print(f'******************************************{resp}')
 
     return render_template('pets_list.html', pets=pets)
 
@@ -50,8 +54,6 @@ def pet_edit(pet_id):
 
     pet = Pet.query.get_or_404(pet_id)
     form = EditPetForm(obj=pet)
-
-    print(f'(******************(*(*I))()(*(*(*)*(*({form.data}')
 
     if form.validate_on_submit():
         [pet.name, pet.age, pet.species, pet.image_url, pet.available] = [form.name.data, form.age.data, 
