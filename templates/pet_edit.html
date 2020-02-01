@@ -1,0 +1,22 @@
+{% extends 'base.html' %} 
+{% block title %} Edit your Pet {% endblock %}
+ {% block header %} Edit your Pet {% endblock %} 
+ {% block content %}
+    <div>
+        <form id="edit-pet-form" method="post">
+            {{ form.hidden_tag() }} 
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            <p>
+                {{ field.label }} {{ field }} 
+                {% for error in field.errors %} {{ error }} {% endfor %}
+            </p>
+            {% endfor %}
+            <button type="submit">Save Changes</button>
+        </form>
+        <form action="/pet/{{pet.id}}">
+            <button>Cancel</button>
+        </form>
+    </div>
+    
+    {% endblock %}
+    

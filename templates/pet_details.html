@@ -1,0 +1,30 @@
+{% extends 'base.html' %} 
+
+{% block title %} About {{pet.name}} {% endblock %} 
+
+{% block header %}<h1>About {{pet.name}}</h1>{% endblock %} 
+
+{% block content %}
+
+{% for msg in get_flashed_messages() %} {{msg}} {% endfor %}
+
+<div>
+    <p>
+        <img src={{pet.image_url}} style="width:200px">
+        <h3>Age: {{pet.age}}</h3>
+        <h3>Species: {{pet.species}}</h3>
+        <b>Availability: {{pet.available}}</b> 
+    </p>
+
+    <form action=/pet/{{pet.id}}/edit>
+        <button>Edit</button>
+    </form>
+    <form action='/'>
+        <button>Back to Pet Listing</button>
+    </form>
+
+
+</div>
+    
+{% endblock %}
+    
